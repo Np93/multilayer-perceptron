@@ -33,7 +33,9 @@ def main():
     for i in range(total_predictions):
         expected = 'M' if y_test[i] == 1 else 'B'
         predicted = 'M' if predicted_classes[i] == 1 else 'B'
+        neuron_outputs = predictions[i]
         print(f"Sample {i + 1}: Expected: {expected}, Predicted: {predicted}")
+        print(f"Neuron outputs: {neuron_outputs[0]:.4f} (B), {neuron_outputs[1]:.4f} (M)")
     
     print(f"Correct predictions: {correct_predictions} / {total_predictions}")
 
