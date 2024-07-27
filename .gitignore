@@ -45,3 +45,6 @@ gmon.out
 compile_commands.json
 .cache
 build
+*test.csv
+*train.csv
+valid.csv
