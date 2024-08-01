@@ -10,7 +10,8 @@ def load_dataset(file_path):
     
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
-    
+    # print("y (étiquettes):", y)
+    # print("X_scaled (caractéristiques normalisées):", X_scaled)
     return X_scaled, y
 
 def add_bias_units(X):

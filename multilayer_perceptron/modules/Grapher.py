@@ -9,13 +9,13 @@ class Grapher:
 
     def calculate_loss(self, model, x, y):
         y_hat = model.feed_forward(x)
-        print(f"calculate_loss: y_hat shape: {y_hat.shape}, y shape: {y.shape}")
+        # print(f"calculate_loss: y_hat shape: {y_hat.shape}, y shape: {y.shape}")
         loss_fn = CrossEntropyLoss()
         loss = loss_fn.loss(y_hat, y)
         return loss
 
     def update_metrics(self, epoch, train_loss, val_loss):
-        print(f"Updating metrics: Epoch {epoch}, Train loss: {train_loss}, Val loss: {val_loss}")
+        # print(f"Updating metrics: Epoch {epoch}, Train loss: {train_loss}, Val loss: {val_loss}")
         new_metrics = pd.DataFrame({"epoch": [epoch], "train_loss": [train_loss], "val_loss": [val_loss]})
         self.metrics = pd.concat([self.metrics, new_metrics], ignore_index=True)
 

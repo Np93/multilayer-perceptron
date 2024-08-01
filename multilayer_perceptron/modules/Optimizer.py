@@ -2,7 +2,7 @@ import numpy as np
 from .Loss import CrossEntropyLoss
 
 class Optimizer:
-    def __init__(self, learning_rate=0.1, loss=CrossEntropyLoss()):
+    def __init__(self, learning_rate=0.01, loss=CrossEntropyLoss()):
         self.loss = loss
         self.lr = learning_rate
 
@@ -18,7 +18,7 @@ class Optimizer:
             self.update_weights(weights_gradient, bias_gradient, l)
 
 class NAGOptimizer(Optimizer):
-    def __init__(self, learning_rate=0.03, momentum=0.9, loss=CrossEntropyLoss()):
+    def __init__(self, learning_rate=0.005, momentum=0.9, loss=CrossEntropyLoss()):
         super().__init__(learning_rate, loss)
         self.momentum = momentum
         self.velocity = None
@@ -32,7 +32,7 @@ class NAGOptimizer(Optimizer):
         velocity_b = self.momentum * velocity_b - self.lr * bias_gradient
         layer.w += velocity_w
         layer.b += velocity_b
-        print(f"Updated weights: w shape {layer.w.shape}, b shape {layer.b.shape}, velocity_w shape {velocity_w.shape}, velocity_b shape {velocity_b.shape}")
+        # print(f"Updated weights: w shape {layer.w.shape}, b shape {layer.b.shape}, velocity_w shape {velocity_w.shape}, velocity_b shape {velocity_b.shape}")
         return velocity_w, velocity_b
 
     def fit(self, layers, y):

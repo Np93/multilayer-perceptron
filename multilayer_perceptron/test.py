@@ -17,6 +17,32 @@ def load_test_data(file_path):
     X, y = load_dataset(file_path)
     return X, y
 
+def evaluate_binary_classifier(model, x, y):
+    yhat = model.feed_forward(x)
+    yhatmax = (yhat == yhat.max(axis=1, keepdims=True)).astype(int)
+    
+    # Convert y to one-hot encoding
+    y_one_hot = np.zeros_like(yhat)
+    y_one_hot[np.arange(y.shape[0]), y] = 1
+    
+    e = (2 * y_one_hot) + yhatmax
+    tp = (e[:, 1] == 3).astype(int).sum()
+    tn = (e[:, 1] == 0).astype(int).sum()
+    fn = (e[:, 1] == 2).astype(int).sum()
+    fp = (e[:, 1] == 1).astype(int).sum()
+    return tp, fp, tn, fn
+
+def calculate_metrics(tp, fp, tn, fn):
+    sensitivity = tp / (tp + fn) if (tp + fn) != 0 else 0
+    specificity = tn / (tn + fp) if (tn + fp) != 0 else 0
+    precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+    f1 = 2.0 * (sensitivity * precision) / (sensitivity + precision) if (sensitivity + precision) != 0 else 0
+    return (sensitivity, specificity, precision, f1)
+
+def print_metrics(tp, fp, tn, fn):
+    sensitivity, specificity, precision, f1 = calculate_metrics(tp, fp, tn, fn)
+    print(f"{sensitivity = :.3f}, {specificity = :.3f}, {precision = :.3f}, {f1 = :.3f}\n")
+
 def main():
     # Vérifiez les fichiers disponibles dans le répertoire data
     print("Files in data directory:", os.listdir(data_dir))
@@ -39,8 +65,18 @@ def main():
     
     print(f"Correct predictions: {correct_predictions} / {total_predictions}")
 
+    # Calcul et affichage des métriques
+    tp, fp, tn, fn = evaluate_binary_classifier(model, X_test, y_test)
+    print_metrics(tp, fp, tn, fn)
+
+    # Afficher la matrice de confusion
+    print(f"True Positives: {tp}")
+    print(f"False Positives: {fp}")
+    print(f"True Negatives: {tn}")
+    print(f"False Negatives: {fn}")
+
 if __name__ == "__main__":
-    main()
+    main() 
 
 
 

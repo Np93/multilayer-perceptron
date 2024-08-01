@@ -13,7 +13,7 @@ class Layer:
         self.x = np.hstack([x, np.ones((x.shape[0], 1))])  # Add bias unit
         self.z = np.dot(self.x, self.w)
         self.a = self.activation(self.z)
-        print(f"Forward pass: x shape {self.x.shape}, w shape {self.w.shape}, z shape {self.z.shape}, a shape {self.a.shape}")
+        # print(f"Forward pass: x shape {self.x.shape}, w shape {self.w.shape}, z shape {self.z.shape}, a shape {self.a.shape}")
         return self.a
 
     def backward(self, djda):
@@ -21,7 +21,7 @@ class Layer:
         djdz = djda * dadz
         djdw = np.dot(self.x.T, djdz) / self.x.shape[0]
         next_djda = np.dot(djdz, self.w[:-1].T)  # Exclude bias term from backpropagation
-        print(f"Backward pass: djda shape {djda.shape}, dadz shape {dadz.shape}, djdz shape {djdz.shape}, djdw shape {djdw.shape}, next_djda shape {next_djda.shape}")
+        # print(f"Backward pass: djda shape {djda.shape}, dadz shape {dadz.shape}, djdz shape {djdz.shape}, djdw shape {djdw.shape}, next_djda shape {next_djda.shape}")
         return next_djda, djdw, np.mean(djdz, axis=0)  # Include mean bias gradient
 
     def __str__(self):

@@ -44,12 +44,12 @@ class Model:
             train_loss = self.grapher.calculate_loss(self, dataset.x, dataset.y)
             val_loss = self.grapher.calculate_loss(self, dataset.x_valid, dataset.y_valid)
             losses.append(val_loss)
-            print(f"Epoch {epoch+1}/{epochs} - Train loss: {train_loss:.4f} - Val loss: {val_loss:.4f}")
+            # print(f"Epoch {epoch+1}/{epochs} - Train loss: {train_loss:.4f} - Val loss: {val_loss:.4f}")
             self.grapher.update_metrics(epoch + 1, train_loss, val_loss)
             # Print predictions for debugging
             predictions = self.feed_forward(dataset.x_valid)
             predicted_classes = np.argmax(predictions, axis=1)
-            print(f"Predictions: {predicted_classes}")
+            # print(f"Predictions: {predicted_classes}")
             
             if len(losses) == early_stopping_patience and all(l > val_loss for l in list(losses)[:-1]):
                 print(f"Early stopping at epoch {epoch + 1}")
