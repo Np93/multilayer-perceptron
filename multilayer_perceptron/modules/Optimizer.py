@@ -2,7 +2,7 @@ import numpy as np
 from .Loss import CrossEntropyLoss
 
 class Optimizer:
-    def __init__(self, learning_rate=0.01, loss=CrossEntropyLoss()):
+    def __init__(self, learning_rate=0.1, loss=CrossEntropyLoss()):
         self.loss = loss
         self.lr = learning_rate
 
@@ -18,7 +18,7 @@ class Optimizer:
             self.update_weights(weights_gradient, bias_gradient, l)
 
 class NAGOptimizer(Optimizer):
-    def __init__(self, learning_rate=0.005, momentum=0.9, loss=CrossEntropyLoss()):
+    def __init__(self, learning_rate=0.03, momentum=0.9, loss=CrossEntropyLoss()):
         super().__init__(learning_rate, loss)
         self.momentum = momentum
         self.velocity = None

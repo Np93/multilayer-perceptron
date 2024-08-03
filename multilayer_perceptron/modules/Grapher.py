@@ -17,6 +17,8 @@ class Grapher:
     def update_metrics(self, epoch, train_loss, val_loss):
         # print(f"Updating metrics: Epoch {epoch}, Train loss: {train_loss}, Val loss: {val_loss}")
         new_metrics = pd.DataFrame({"epoch": [epoch], "train_loss": [train_loss], "val_loss": [val_loss]})
+        self.metrics = self.metrics.dropna(axis=1, how='all')
+        new_metrics = new_metrics.dropna(axis=1, how='all')
         self.metrics = pd.concat([self.metrics, new_metrics], ignore_index=True)
 
     def plot_metrics(self):
