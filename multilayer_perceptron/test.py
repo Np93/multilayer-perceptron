@@ -66,6 +66,9 @@ def main():
     model_path = os.path.join(models_dir, model_name)
 
     # Vérifiez si les fichiers existent
+    if test_file_path == 'data/data.csv':
+        print(f"Error: file for Prediction not valid: {test_file_path}")
+        sys.exit(1)
     if not os.path.exists(test_file_path):
         print(f"Error: file for Prediction not found: {test_file_path}")
         sys.exit(1)

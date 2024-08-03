@@ -90,29 +90,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # def save_model(layers, file_path='data/saved_model.npy'):
-    # model_data = [(layer.weights, layer.bias) for layer in layers]
-    # np.save(file_path, model_data)

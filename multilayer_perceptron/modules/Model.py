@@ -71,24 +71,6 @@ class Model:
                     layer.w, layer.b = self.best_weights_biases[i]
                 break
 
-    # def save(self, model_name="mymodel", passe=1):
-    #     base_dir = os.path.dirname(os.path.abspath(__file__))
-    #     models_dir = os.path.join(base_dir, "models")
-    #     if not os.path.exists(models_dir):
-    #         os.makedirs(models_dir)
-    #     path = os.path.join(models_dir, model_name)
-    #     if passe == 0:
-    #         print(f"Saving model to: {path}")
-    #     delete_dir_and_contents(path)
-    #     os.mkdir(path)
-    #     np.savetxt(os.path.join(path, "activations.csv"), self.activations, delimiter=",", fmt="%s")
-    #     np.savetxt(os.path.join(path, "sizes.csv"), self.sizes, delimiter=",", fmt="%d")
-    #     with open(os.path.join(path, "optimizer.pkl"), "wb") as f:
-    #         pickle.dump(self.optimizer, f)
-    #     for i, layer in enumerate(self.layers):
-    #         np.savetxt(os.path.join(path, f"weights_{i}.csv"), layer.w, delimiter=",")
-    #         np.savetxt(os.path.join(path, f"biases_{i}.csv"), layer.b, delimiter=",")
-
     def save(self, model_name="mymodel", metrics=None, passe=1):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         models_dir = os.path.join(base_dir, "models")
