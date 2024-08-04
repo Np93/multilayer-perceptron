@@ -27,15 +27,19 @@ def main():
         print(f"Error: Validation file not found: {valid_file_path}")
         sys.exit(1)
     
-    X_train, y_train = load_dataset(train_file_path)
-    X_valid, y_valid = load_dataset(valid_file_path)
+    X_train, y_train, len_exite_train = load_dataset(train_file_path)
+    X_valid, y_valid, len_exite_valid = load_dataset(valid_file_path)
     print(f"X_train shape : {X_train.shape}")
     print(f"X_valid shape : {X_valid.shape}")
     
     train_dataset = Dataset(X_train, y_train, X_valid, y_valid)
     valid_dataset = Dataset(X_valid, y_valid)
+
+    if len_exite_train != len_exite_valid:
+        print("Error len neurone exite")
+        sys.exit(1)
     
-    model = Model(sizes=[X_train.shape[1], 15, 8, 2], activations=['relu', 'relu', 'softmax'], optimizer=optimizer)
+    model = Model(sizes=[X_train.shape[1], 15, 8, len_exite_train], activations=['relu', 'relu', 'softmax'], optimizer=optimizer)
     
     train_losses = []
     val_losses = []

@@ -17,7 +17,7 @@ default_model_name = "mymodel"
 def load_test_data(file_path):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
-    X, y = load_dataset(file_path)
+    X, y, len_exite = load_dataset(file_path)
     return X, y
 
 def evaluate_binary_classifier(model, x, y):
@@ -75,9 +75,6 @@ def main():
     if not os.path.exists(model_path):
         print(f"Error: model file not found: {model_path}")
         sys.exit(1)
-
-    # Vérifiez les fichiers disponibles dans le répertoire data
-    print("Files in data directory:", os.listdir(data_dir))
     
     model = Model.load(model_name)
     X_test, y_test = load_test_data(test_file_path)

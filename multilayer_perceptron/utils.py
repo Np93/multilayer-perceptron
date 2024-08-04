@@ -1,18 +1,44 @@
 import numpy as np
 import os
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 
 def load_dataset(file_path):
-    data = pd.read_csv(file_path, header=None)
-    y = data.iloc[:, 0].apply(lambda x: 1 if x == 'M' else 0).values  # Correctement extraire les étiquettes
+    data = verify_file(file_path)
+
+    y = data.iloc[:, 0].values  # Extraire les étiquettes sans transformation
     X = data.iloc[:, 1:].values  # Utiliser les colonnes restantes pour les caractéristiques
     
+    # Utiliser LabelEncoder pour encoder les étiquettes de manière ordonnée
+    label_encoder = LabelEncoder()
+    y = label_encoder.fit_transform(y)
+
     scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
-    # print("y (étiquettes):", y)
-    # print("X_scaled (caractéristiques normalisées):", X_scaled)
-    return X_scaled, y
+
+    unique_labels = np.unique(y)
+    num_unique_labels = len(unique_labels)
+    
+    print(f"Nombre de symboles différents dans y: {num_unique_labels}")
+    return X_scaled, y, num_unique_labels
+
+def verify_file(file_path):
+    # Vérifier que le fichier est un .csv
+    if not file_path.endswith('.csv'):
+        raise ValueError("Le fichier doit être un fichier .csv.")
+
+    # Vérifier que le fichier existe
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Le fichier {file_path} n'existe pas.")
+    
+    # Lire le fichier sans en-tête pour vérification
+    data = pd.read_csv(file_path, header=None)
+    
+    # Vérification des valeurs manquantes
+    if data.isnull().values.any():
+        raise ValueError("Le fichier contient des valeurs manquantes.")
+    
+    return data
 
 def add_bias_units(X):
     return np.hstack([np.ones((X.shape[0], 1)), X])
