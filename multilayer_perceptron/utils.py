@@ -56,7 +56,7 @@ def delete_dir_and_contents(path):
                 delete_dir_and_contents(file_path)
         os.rmdir(path)
 
-def get_activation_function(name):
+def get_activation_function(name: str):
     if name == 'sigmoid':
         return sigmoid, sigmoid_derivative
     elif name == 'relu':

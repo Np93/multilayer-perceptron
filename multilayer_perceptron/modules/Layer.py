@@ -3,7 +3,7 @@ from utils import add_bias_units, xavier_init, get_activation_function
 
 class Layer:
     def __init__(self, in_size, out_size, activation='sigmoid'):
-        self.activation, self.activation_derivative = get_activation_function(activation)
+        self.activation, self.activation_derivative = get_activation_function(name=activation)
         self.in_size = in_size
         self.out_size = out_size
         self.w = np.random.randn(in_size + 1, out_size) * np.sqrt(2 / (in_size + out_size))  # Xavier initialization
