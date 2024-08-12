@@ -5,6 +5,12 @@ import os
 data_folder = 'data'
 data_file = os.path.join(data_folder, 'data.csv')
 
+if not os.path.exists(data_folder):
+    raise FileNotFoundError(f"Le dossier '{data_folder}' n'existe pas. Veuillez créer ce dossier et y ajouter les fichiers nécessaires.")
+
+if not os.path.isfile(data_file):
+    raise FileNotFoundError(f"Le fichier '{data_file}' est introuvable dans le dossier '{data_folder}'. Veuillez vérifier le fichier et son emplacement.")
+
 # 1. Charger les données depuis data.csv sans noms de colonnes
 data = pd.read_csv(data_file, header=None)
 

@@ -1,26 +1,31 @@
 import numpy as np
 import os
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 
 def load_dataset(file_path):
     data = verify_file(file_path)
 
     y = data.iloc[:, 0].values  # Extraire les étiquettes sans transformation
     X = data.iloc[:, 1:].values  # Utiliser les colonnes restantes pour les caractéristiques
-    
-    # Utiliser LabelEncoder pour encoder les étiquettes de manière ordonnée
-    label_encoder = LabelEncoder()
-    y = label_encoder.fit_transform(y)
 
-    scaler = MinMaxScaler()
-    X_scaled = scaler.fit_transform(X)
+    y, num_unique_labels = label_encoder(y)
 
-    unique_labels = np.unique(y)
-    num_unique_labels = len(unique_labels)
-    
-    print(f"Nombre de symboles différents dans y: {num_unique_labels}")
+    X_scaled = min_max_scaler(X)
+
     return X_scaled, y, num_unique_labels
+
+def min_max_scaler(X):
+    X_min = X.min(axis=0)
+    X_max = X.max(axis=0)
+    X_scaled = (X - X_min) / (X_max - X_min)
+    return X_scaled
+
+def label_encoder(y):
+    unique_labels = np.unique(y)
+    label_map = {label: idx for idx, label in enumerate(unique_labels)}
+    y_encoded = np.array([label_map[label] for label in y])
+    return y_encoded, len(unique_labels)
+
 
 def verify_file(file_path):
     # Vérifier que le fichier est un .csv
